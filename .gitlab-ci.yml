@@ -13,12 +13,13 @@ build:
   stage: build
   script:
     - export GOPATH='/go'
-    - mkdir -p /go/src/github.com/atarax/rbl-control
+    - mkdir -p /go/src/github.com/atarax/kraken
     - cd /go/src/github.com/atarax/ 
-    - git clone https://github.com/atarax/rbl-control
-    - cd rbl-control
+    - git clone https://github.com/atarax/kraken
+    - cd kraken
     - go get ./...
-    - CGO_ENABLED=0 go build -o bin/rbl-control
+    - CGO_ENABLED=0 go build -o bin/kraken
+    - docker build . -t atarax/kraken
 test:
   stage: test
   script:
