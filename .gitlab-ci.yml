@@ -7,6 +7,7 @@ stages:
 variables:
   DOCKER_REPOSITORY: "atarax"
   GITHUB_REPOSITORY: "atarax"
+  BINARY_NAME: "kraken"
   CANDIDATE_IMAGE: "$DOCKER_REPOSITORY/${CI_PROJECT_NAME}:candidate-${CI_COMMIT_SHA}"
   STABLE_IMAGE: "${CI_PROJECT_NAME}:${CI_COMMIT_SHA}"
 
@@ -17,15 +18,10 @@ build_binary:
     paths:
       - bin
   script:
-    # - export GOPATH='/go'
-    # - mkdir -p /go/src/github.com/atarax/kraken
-    # - cd /go/src/github.com/atarax/ 
-    # - git clone https://github.com/atarax/kraken
-    # - cd kraken
     - ln -s $CI_PROJECT_DIR $GOPATH/src/$CI_PROJECT_NAME
     - cd $GOPATH/src/$CI_PROJECT_NAME
     - go get ./...
-    - CGO_ENABLED=0 go build -o bin/kraken
+    - CGO_ENABLED=0 go build -o bin/$BINARY_NAME
 
 build_docker_image:
   stage: build_docker_image
@@ -39,9 +35,11 @@ build_docker_image:
 test:
   stage: test
   script:
-    - "echo hello"
+    - docker run $CANDIDATE_IMAGE $BINARY_NAME stress -h "http://google.com" 
 
 deploy:
   stage: deploy
   script:
-    - echo "hello"
+    - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD
+    - docker tag $CANDIDATE_IMAGE $STABLE_IMAGE
+    - docker push $STABLE_IMAGE
