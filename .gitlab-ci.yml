@@ -22,7 +22,7 @@ build_binary:
     # - cd /go/src/github.com/atarax/ 
     # - git clone https://github.com/atarax/kraken
     # - cd kraken
-    - ln -s $CI_PROJECT_DIR $GOPATH/$CI_PROJECT_NAME
+    - ln -s $CI_PROJECT_DIR $GOPATH/src/$CI_PROJECT_NAME
     - cd $GOPATH/$CI_PROJECT_NAME
     - go get ./...
     - CGO_ENABLED=0 go build -o bin/kraken
