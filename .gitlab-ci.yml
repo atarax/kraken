@@ -1,5 +1,6 @@
 stages:
-  - build
+  - build_binary
+  - build_docker_image
   - test
   - deploy
 
