@@ -16,11 +16,11 @@ build_binary:
     paths:
       - bin
   script:
-    - export GOPATH='/go'
-    - mkdir -p /go/src/github.com/atarax/kraken
-    - cd /go/src/github.com/atarax/ 
-    - git clone https://github.com/atarax/kraken
-    - cd kraken
+    # - export GOPATH='/go'
+    # - mkdir -p /go/src/github.com/atarax/kraken
+    # - cd /go/src/github.com/atarax/ 
+    # - git clone https://github.com/atarax/kraken
+    # - cd kraken
     - go get ./...
     - CGO_ENABLED=0 go build -o bin/kraken
 
