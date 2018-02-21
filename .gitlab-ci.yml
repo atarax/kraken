@@ -1,7 +1,26 @@
 stages:
   - build
+  - test
+  - deploy
+
+variables:
+  DOCKER_REPOSITORY: ""
+  CANDIDATE_IMAGE: "${CI_PROJECT_NAME}:candidate-${CI_COMMIT_SHA}"
+  STABLE_IMAGE: "${CI_PROJECT_NAME}:${CI_COMMIT_SHA}"
 
 build:
   stage: build
   script:
+    - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}
+    - docker build -t ${DOCKERHUB_USER}/${CANDIDATE_IMAGE} .
+    - docker push ${DOCKER_REPOSITORY}/${IMEDIATE_IMAGE}
+
+test:
+  stage: test
+  script:
     - "echo hello"
+
+deploy:
+  stage: deploy
+  script:
+    - echo "hello"
