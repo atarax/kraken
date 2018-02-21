@@ -32,6 +32,7 @@ build_docker_image:
   dependencies:
     - build_binary
   script:
+    - docker login $DOCKERHUB_USER $DOCKERHUB_PASSWORD
     - docker build . -t $CANDIDATE_IMAGE
     - docker push $CANDIDATE_IMAGE
 
