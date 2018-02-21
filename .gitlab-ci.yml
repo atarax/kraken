@@ -4,13 +4,13 @@ stages:
   - deploy
 
 variables:
-  DOCKER_REPOSITORY: ""
-  CANDIDATE_IMAGE: "${CI_PROJECT_NAME}:candidate-${CI_COMMIT_SHA}"
+  DOCKER_REPOSITORY: "atarax"
+  CANDIDATE_IMAGE: "$DOCKER_REPOSITORY/${CI_PROJECT_NAME}:candidate-${CI_COMMIT_SHA}"
   STABLE_IMAGE: "${CI_PROJECT_NAME}:${CI_COMMIT_SHA}"
 
-build:
+build_binary:
   image: golang 
-  stage: build
+  stage: build_binary
   script:
     - export GOPATH='/go'
     - mkdir -p /go/src/github.com/atarax/kraken
@@ -19,7 +19,13 @@ build:
     - cd kraken
     - go get ./...
     - CGO_ENABLED=0 go build -o bin/kraken
-    - docker build . -t atarax/kraken
+
+build_docker_image:
+  stage: build_docker_image
+  script:
+    - docker build . -t $CANDIDATE_IMAGE
+    - docker push $CANDIDATE_IMAGE
+
 test:
   stage: test
   script:
