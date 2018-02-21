@@ -12,6 +12,9 @@ variables:
 build_binary:
   image: golang 
   stage: build_binary
+  artifacts:
+    paths:
+      - bin
   script:
     - export GOPATH='/go'
     - mkdir -p /go/src/github.com/atarax/kraken
@@ -23,6 +26,8 @@ build_binary:
 
 build_docker_image:
   stage: build_docker_image
+  depends_on:
+    - build_binary
   script:
     - docker build . -t $CANDIDATE_IMAGE
     - docker push $CANDIDATE_IMAGE
