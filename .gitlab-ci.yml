@@ -6,6 +6,7 @@ stages:
 
 variables:
   DOCKER_REPOSITORY: "atarax"
+  GITHUB_REPOSITORY: "atarax"
   CANDIDATE_IMAGE: "$DOCKER_REPOSITORY/${CI_PROJECT_NAME}:candidate-${CI_COMMIT_SHA}"
   STABLE_IMAGE: "${CI_PROJECT_NAME}:${CI_COMMIT_SHA}"
 
@@ -21,6 +22,7 @@ build_binary:
     # - cd /go/src/github.com/atarax/ 
     # - git clone https://github.com/atarax/kraken
     # - cd kraken
+    - ln -s $CI_PROJECT_DIR $GOPATH/$CI_PROJECT_NAME
     - go get ./...
     - CGO_ENABLED=0 go build -o bin/kraken
 
