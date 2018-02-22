@@ -75,9 +75,6 @@ to quickly create a Cobra application.`,
 
 func init() {
 	inventoryCmd.AddCommand(acquireCmd)
-
-	acquireCmd.Flags().StringP("region", "r", os.Getenv("AWS_REGION"), "AWS-Region")
-	acquireCmd.Flags().BoolP("verbose", "v", false, "Verbose")
 }
 
 func ensureSecurityGroup(sess *session.Session, groupName string) string {

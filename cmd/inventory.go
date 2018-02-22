@@ -15,6 +15,8 @@
 package cmd
 
 import (
+	"os"
+
 	"github.com/spf13/cobra"
 )
 
@@ -29,6 +31,8 @@ used aws-commands.`,
 func init() {
 	rootCmd.AddCommand(inventoryCmd)
 
+	inventoryCmd.PersistentFlags().StringP("region", "r", os.Getenv("AWS_REGION"), "AWS-Region")
+	inventoryCmd.PersistentFlags().BoolP("verbose", "v", false, "Verbose")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
