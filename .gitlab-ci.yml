@@ -36,9 +36,9 @@ test:
   stage: test
   script:
     - docker run $CANDIDATE_IMAGE $BINARY_NAME stress -t "http://google.com" 
-    - docker run $CANDIDATE_IMAGE $BINARY_NAME inventory acquire" 
-    - docker run $CANDIDATE_IMAGE $BINARY_NAME inventory list" 
-    - docker run $CANDIDATE_IMAGE $BINARY_NAME inventory destroy" 
+    - docker run $CANDIDATE_IMAGE $BINARY_NAME inventory acquire
+    - docker run $CANDIDATE_IMAGE $BINARY_NAME inventory list
+    - docker run $CANDIDATE_IMAGE $BINARY_NAME inventory destroy 
 
 deploy:
   stage: deploy
