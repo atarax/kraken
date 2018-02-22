@@ -42,22 +42,15 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("acquire called")
-
 		amiPerRegion := map[string]string{
 			"eu-central-1": "ami-5055cd3f",
 			"eu-west-1":    "ami-1b791862",
 			"eu-west-3":    "ami-c1cf79bc",
 		}
 
-		// var command, region, instanceID string
-		var enableVerbose bool
-
 		region, _ := cmd.Flags().GetString("region")
-		// if err != nil {
-		// 	handleError(err, "Error handling flag: region")
-		// }
-		// region := "eu-west-1"
+		enableVerbose, _ := cmd.Flags().GetBool("verbose")
+
 		if enableVerbose {
 			os.Setenv("__VERBOSE", "1")
 		}
@@ -84,6 +77,7 @@ func init() {
 	inventoryCmd.AddCommand(acquireCmd)
 
 	acquireCmd.Flags().StringP("region", "r", os.Getenv("AWS_REGION"), "AWS-Region")
+	acquireCmd.Flags().BoolP("verbose", "v", false, "Verbose")
 }
 
 func ensureSecurityGroup(sess *session.Session, groupName string) string {
@@ -231,11 +225,4 @@ func createInstance(sess *session.Session,
 func exitErrorf(msg string, args ...interface{}) {
 	fmt.Fprintf(os.Stderr, msg+"\n", args...)
 	os.Exit(1)
-}
-
-func verbose(message string) {
-	if os.Getenv("__VERBOSE") == "1" {
-		t := time.Now()
-		fmt.Println(t.Format("2006-01-02 15:04:05"), " - ", message)
-	}
 }

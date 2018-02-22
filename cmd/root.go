@@ -17,6 +17,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"time"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
@@ -91,4 +92,11 @@ func initConfig() {
 func handleError(e error, message string) {
 	fmt.Printf(message)
 	panic(e)
+}
+
+func verbose(message string) {
+	if os.Getenv("__VERBOSE") == "1" {
+		t := time.Now()
+		fmt.Println(t.Format("2006-01-02 15:04:05"), " - ", message)
+	}
 }
