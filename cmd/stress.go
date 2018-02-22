@@ -43,11 +43,6 @@ parallel execution and delay between requests.`,
 	},
 }
 
-func handleError(e error, message string) {
-	fmt.Printf(message)
-	panic(e)
-}
-
 func httpStress(count int, parallelism int, target string) {
 	barrier := make(chan bool)
 

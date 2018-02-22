@@ -87,3 +87,8 @@ func initConfig() {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
 }
+
+func handleError(e error, message string) {
+	fmt.Printf(message)
+	panic(e)
+}
